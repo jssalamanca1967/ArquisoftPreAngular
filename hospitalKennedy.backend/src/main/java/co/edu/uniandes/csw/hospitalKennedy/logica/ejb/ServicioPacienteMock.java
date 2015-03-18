@@ -36,8 +36,8 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     
     //@EJB
     //public static IServicioPersistenciaMockLocal persistencia;
-     @PersistenceUnit(unitName = "HospitalKennedyPU")
-    EntityManager entityManager;
+    @PersistenceContext(unitName = "HospitalKennedyPU")
+    EntityManager entityManager; 
 
     public ServicioPacienteMock()
     {

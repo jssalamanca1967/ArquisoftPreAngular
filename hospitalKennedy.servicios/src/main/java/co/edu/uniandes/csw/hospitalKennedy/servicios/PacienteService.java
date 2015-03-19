@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 //import javax.ejb.EJB;
 //import javax.ejb.Stateful;
 //import javax.ejb.Stateless;
@@ -38,7 +39,7 @@ import org.json.simple.JSONObject;
  * @author estudiante
  */
 @Path("/Pacientes")
-//@Stateful
+@Stateless
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PacienteService {
@@ -92,7 +93,7 @@ public class PacienteService {
         //for(Reporte reporte: lista){
         //    pacienteEjb.removerReporte(id, reporte);
         //}
-        Reporte r = servicioPaciente.removerReporte(idPaciente, idReporte);
+        Reporte r = servicioPaciente.removerReporte(Long.parseLong("" + idPaciente), Long.parseLong("" +  idReporte));
         
         return Response.status(200).header("Access-Control-Allow-Origin","*").entity(r).build();
 
@@ -130,7 +131,7 @@ public class PacienteService {
         //System.out.println(res);
         //return res;
       
-        Reporte reporte = servicioPaciente.getReportePorPaciente(idPaciente, idReporte);
+        Reporte reporte = servicioPaciente.getReportePorPaciente(Long.parseLong(idPaciente), Long.parseLong(idReporte));
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
     }

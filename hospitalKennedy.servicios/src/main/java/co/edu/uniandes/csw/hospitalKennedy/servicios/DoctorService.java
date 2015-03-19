@@ -14,6 +14,7 @@ import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioDoctorMock
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 //import javax.ejb.EJB;
 //import javax.ejb.Stateful;
 //import javax.ejb.Stateless;
@@ -37,7 +38,7 @@ import org.json.simple.JSONObject;
  * @author estudiante
  */
 @Path("/Doctor")
-//@Stateful
+@Stateless
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class DoctorService {
@@ -55,20 +56,6 @@ public class DoctorService {
     @POST
     @Path("/agregar")
     public Response agregarPaciente(PacienteDTO paciente){
-      //  for(Paciente paciente: lista){
-      //      doctorEjb.agregarPaciente(paciente);
-      //  }
-        
-      //  return lista;
-//<<<<<<< .mine
-//        
-//        PacienteDTO pacRta = doctor.agregarPaciente(paciente);
-//        
-//        JSONObject rta = new JSONObject();
-//        rta.put("paciente_id", pacRta.getId());
-//        
-//        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta.toJSONString()).build();
-//=======
         PacienteDTO p = servicioDoctor.agregarPaciente(paciente);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();
 

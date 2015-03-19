@@ -20,10 +20,10 @@ public interface IServicioPacienteMock {
     
     public List<Reporte> getReportes(String idPaciente);
     public ReporteDTO agregarReporte(String idPaciente, ReporteDTO reporte);
-    public Reporte removerReporte(String idPaciente, String idReporte);
+    public Reporte removerReporte(Long idPaciente, Long idReporte);
     public Paciente darPaciente(String idPaciente);
     public List<Paciente> darPacientes();
-    public Reporte getReportePorPaciente(String idPaciente,String idReporte);
+    public Reporte getReportePorPaciente(Long idPaciente, Long idReporte);
 
     public List<Reporte> getReportesEntreFechas(String idPaciente, String codFecha1, String codFecha2);
     

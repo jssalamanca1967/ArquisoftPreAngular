@@ -38,7 +38,7 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     //@EJB
     //public static IServicioPersistenciaMockLocal persistencia;
     
-    @PersistenceContext(unitName = "HospitalKennedyPU")
+    @PersistenceUnit(unitName = "HospitalKennedyPU")
     EntityManager entityManager; 
 
     
@@ -93,9 +93,16 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         
         p.setAltura(paciente.getAltura());
         p.setCedulaCiudadania(paciente.getCedulaCiudadania());
+        p.setId(Long.parseLong("" + paciente.getCedulaCiudadania()));
         p.setEdad(paciente.getEdad());
         p.setNombre(paciente.getNombre());
-        p.setReportes(paciente.getReportes());
+        
+        System.out.println(paciente.getReportes());
+        
+//        for(int i = 0; i < paciente.getReportes().size(); i++)
+//        {
+//            p.agregarReporte(paciente.getReportes().get(i));
+//        }
 
         try {
             entityManager.getTransaction().begin();

@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
  
 import javax.persistence.Column;
@@ -72,6 +72,8 @@ public class Paciente implements Serializable{
     
     public Paciente(){
         
+        reportes = new ArrayList<Reporte>();
+        
     }
     
     public Paciente(Long id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
@@ -80,7 +82,10 @@ public class Paciente implements Serializable{
         this.edad = edad;
         this.cedulaCiudadania = cedulaCiudadania;
         this.altura = altura;
-        reportes = reportesN;
+        if(reportes != null)
+            reportes = reportesN;
+        else
+            reportes = new ArrayList<Reporte>();
     }
     
     @PreUpdate
@@ -109,7 +114,7 @@ public class Paciente implements Serializable{
         return reportes;
     }
     
-    public Reporte getReporte(String idReporte)
+    public Reporte getReporte(Long idReporte)
     {
         Reporte r = null;
         boolean ya = false;
@@ -129,29 +134,18 @@ public class Paciente implements Serializable{
         List<Reporte> estos= new ArrayList<Reporte>();
         for(int i =0;i<reportes.size();i++)
         {
-            SimpleDateFormat formato = new SimpleDateFormat("dd-mm-yyyy");
-            try
+            Reporte actual = reportes.get(i);
+            if(actual.getFechaCreacion().compareTo(fecha1) >= 0 && actual.getFechaCreacion().compareTo(fecha2) <= 0)
             {
-                Date fech1 = formato.parse(fecha1);
-                Date fech2 = formato.parse(fecha2);
-                Date fecha = formato.parse(reportes.get(i).getFechaCreacion());
-                if(fecha.after(fech1)&&fecha.before(fech2))
-                {
-                    estos.add(reportes.get(i));
-                }
-            }
-            catch(ParseException e)
-            {
-                e.printStackTrace();
-            }
-            
+                estos.add(actual);
+            }        
             
             
         }
         return estos;
     }
     
-    public void removerReporte(String idReporte)
+    public void removerReporte(Long idReporte)
     {
         boolean ya =false;
         for(int i =0;i<reportes.size()&&!ya;i++)
@@ -206,6 +200,8 @@ public class Paciente implements Serializable{
     
     public void agregarReporte(Reporte reporte)
     {
+        reporte.setId(Long.parseLong("" + cedulaCiudadania + reportes.size() + 1));
+        reporte.setFechaCreacion((new Date(System.currentTimeMillis())).toString());
         reportes.add(reporte);
     }
     

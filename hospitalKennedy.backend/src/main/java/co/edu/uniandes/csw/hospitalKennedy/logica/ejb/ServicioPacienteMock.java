@@ -25,7 +25,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
-import org.json.simple.JSONObject;
 
 /**
  *
@@ -36,7 +35,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     
     //@EJB
     //public static IServicioPersistenciaMockLocal persistencia;
-    @PersistenceContext(unitName = "HospitalKennedyPU")
+    @PersistenceUnit (unitName = "HospitalKennedyPU")
     EntityManager entityManager; 
 
     public ServicioPacienteMock()
@@ -47,13 +46,6 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //if(ServicioDoctorMock.persistencia == null)
-        //{
-        //    persistencia = new ServicioPersistenciaMock();
-            
-        //}
-        //else
-        //    persistencia = ServicioDoctorMock.persistencia;
     }
 
     @Override
@@ -68,7 +60,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
      @Override        
     public ReporteDTO agregarReporte(String idPaciente, ReporteDTO reporte)
     {
-       Reporte r = new Reporte();
+        Reporte r = new Reporte();
        
         r.setActividadFisica(reporte.getActividadFisica());
         r.setAlimentacion(reporte.getAlimentacion());
@@ -77,6 +69,8 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         r.setLocalizacionDolor(reporte.getLocalizacionDolor());
         r.setPatronSuenio(reporte.getPatronSuenio());
         r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());  
+        
+        
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
         Paciente p = pacientes.get(0);
@@ -105,7 +99,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
     
     @Override
-    public Reporte removerReporte(String idPaciente, String idReporte)
+    public Reporte removerReporte(Long idPaciente, Long idReporte)
     {
         Query q1 = entityManager.createQuery("select u from Paciente where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q1.getResultList();
@@ -132,8 +126,6 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
             entityManager.close();
         }
         
-//        Query q2 = entityManager.createQuery("delete u from Reporte u where u.id = '"+idReporte+"'");
-//        q2.executeUpdate();
         return r;
     }
 
@@ -156,7 +148,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
 
     @Override
-    public Reporte getReportePorPaciente(String idPaciente, String idReporte) {
+    public Reporte getReportePorPaciente(Long idPaciente, Long idReporte) {
     
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'"+"'");
         List<Paciente> pacientes = q.getResultList();
